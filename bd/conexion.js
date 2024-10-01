@@ -8,6 +8,7 @@ const proyecto = admin.firestore();
 
 const usuarios = proyecto.collection("miejemploBD");
 const productos = proyecto.collection("productos");
+const ventas = proyecto.collection("ventas");
 //const productos = proyecto.collection("productos");
 
 //console.log(usuarios);
@@ -15,5 +16,6 @@ const productos = proyecto.collection("productos");
 
 module.exports = {
     usuarios,
-    productos
+    productos,
+    ventas
 }

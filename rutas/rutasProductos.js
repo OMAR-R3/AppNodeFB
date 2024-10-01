@@ -4,8 +4,7 @@ var {mostrarProductos,nuevoProducto,buscarPorID, borraProducto}=require("../bd/p
 
 rutas.get("/",async(req,res)=>{
     var productosValidos=await mostrarProductos();
-    console.log(productosValidos);
-    
+    //console.log(productosValidos);
     res.json(productosValidos);
 });
 

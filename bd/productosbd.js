@@ -8,7 +8,7 @@ function validarDatos(producto) {
         valido = true;
     }
     //console.log(valido);
-    
+
     return valido;
 }
 
@@ -29,15 +29,38 @@ async function buscarPorID(id) {
     //console.log(producto);
     const producto1 = new Producto({ id: producto.id, ...producto.data() });
     var productoValido = false;
-   // console.log(producto1);
+    // console.log(producto1);
     if (validarDatos(producto1.getProducto)) {
         productoValido = producto1.getProducto;
     }
     //console.log(productoValido);
-    
+
     return productoValido;
 }
 
+async function validarID(id) {
+    const producto = await productosBD.doc(id).get();
+    if (producto.exists) {
+        return true;
+    } else {
+        console.log("Producto no encontrado, id: " + id);
+        return false;
+    }
+}
+async function validarCantidad(productoId, cantidad) {
+    const producto = await productosBD.doc(productoId).get();
+    const productoData = producto.data();
+    const stock = productoData.cantidad;
+    if (Number(stock) >= Number(cantidad)) {
+        await productosBD.doc(productoId).update({
+            cantidad: stock - cantidad
+        });
+        return true;
+    } else {
+        console.log("Producto insuficiente");
+        return false;
+    }
+}
 async function nuevoProducto(data) {
     const producto1 = new Producto(data);
     var productoValido = false;
@@ -63,5 +86,7 @@ module.exports = {
     buscarPorID,
     mostrarProductos,
     nuevoProducto,
-    borraProducto
+    borraProducto,
+    validarID,
+    validarCantidad
 }

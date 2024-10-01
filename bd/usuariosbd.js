@@ -29,7 +29,16 @@ async function buscarPorID(id) {
     if (validarDatos(usuario1.getUsuario)) {
         usuarioValido = usuario1.getUsuario;
     }
-    return usuarioValido
+    return usuarioValido;
+}
+async function validarID(id) {
+    const usuario = await usuariosBD.doc(id).get();
+    if (usuario.exists) {
+        return true;
+    } else {
+        console.log("Usuario no encontrado, id: " + id);
+        return false;
+    }
 }
 
 async function nuevoUsuario(data) {
@@ -60,5 +69,6 @@ module.exports = {
     buscarPorID,
     mostrarUsuarios,
     nuevoUsuario,
-    borrarUsuario
+    borrarUsuario,
+    validarID
 }
